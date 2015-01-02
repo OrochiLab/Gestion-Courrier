@@ -1,0 +1,194 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="GestionCourrier.Site" %>
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<!-- Apple devices fullscreen -->
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<!-- Apple devices fullscreen -->
+	<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	
+	<title>Gestion de courriers</title>
+    <!-- Bootstrap -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<!-- Bootstrap responsive -->
+	<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+	<!-- jQuery UI -->
+	<link rel="stylesheet" href="css/plugins/jquery-ui/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="css/plugins/jquery-ui/smoothness/jquery.ui.theme.css">
+	<!-- dataTables -->
+	<link rel="stylesheet" href="css/plugins/datatable/TableTools.css">
+	<!-- chosen -->
+	<link rel="stylesheet" href="css/plugins/chosen/chosen.css">
+	<!-- Theme CSS -->
+	<link rel="stylesheet" href="css/style.css">
+	<!-- Color CSS -->
+	<link rel="stylesheet" href="css/themes.css">
+    <!-- PageGuide -->
+	<link rel="stylesheet" href="css/plugins/pageguide/pageguide.css">
+    <!-- multi select -->
+	<link rel="stylesheet" href="css/plugins/multiselect/multi-select.css">
+    <!-- Datepicker -->
+	<link rel="stylesheet" href="css/plugins/datepicker/datepicker.css">
+	<!-- jQuery -->
+	<script src="js/jquery.min.js"></script>
+	
+	<!-- Nice Scroll -->
+	<script src="js/plugins/nicescroll/jquery.nicescroll.min.js"></script>
+	<!-- imagesLoaded -->
+	<script src="js/plugins/imagesLoaded/jquery.imagesloaded.min.js"></script>
+	<!-- jQuery UI -->
+	<script src="js/plugins/jquery-ui/jquery.ui.core.min.js"></script>
+	<script src="js/plugins/jquery-ui/jquery.ui.widget.min.js"></script>
+	<script src="js/plugins/jquery-ui/jquery.ui.mouse.min.js"></script>
+	<script src="js/plugins/jquery-ui/jquery.ui.resizable.min.js"></script>
+	<script src="js/plugins/jquery-ui/jquery.ui.sortable.min.js"></script>
+	<script src="js/plugins/jquery-ui/jquery.ui.datepicker.min.js"></script>
+	<!-- slimScroll -->
+	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Bootbox -->
+	<script src="js/plugins/bootbox/jquery.bootbox.js"></script>
+	<!-- dataTables -->
+	<script src="js/plugins/datatable/jquery.dataTables.min.js"></script>
+	<script src="js/plugins/datatable/TableTools.min.js"></script>
+	<script src="js/plugins/datatable/ColReorderWithResize.js"></script>
+	<script src="js/plugins/datatable/ColVis.min.js"></script>
+	<script src="js/plugins/datatable/jquery.dataTables.columnFilter.js"></script>
+	<script src="js/plugins/datatable/jquery.dataTables.grouping.js"></script>
+	<!-- Chosen -->
+	<script src="js/plugins/chosen/chosen.jquery.min.js"></script>
+    <!-- icheck -->
+	<link rel="stylesheet" href="css/plugins/icheck/all.css">
+	<script src="js/plugins/icheck/jquery.icheck.min.js"></script>
+	<!-- Theme framework -->
+	<script src="js/eakroko.min.js"></script>
+	<!-- Theme scripts -->
+	<script src="js/application.min.js"></script>
+	<!-- Just for demonstration -->
+	<script src="js/demonstration.min.js"></script>
+
+	<!--[if lte IE 9]>
+		<script src="js/plugins/placeholder/jquery.placeholder.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('input, textarea').placeholder();
+			});
+		</script>
+	<![endif]-->
+	
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="img/favicon.ico" />
+	<!-- Apple devices Homescreen icon -->
+	<link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-precomposed.png" />
+
+
+</head>
+
+<body>
+    <form runat="server">
+	<div id="navigation">
+		<div class="container-fluid">
+			<a href="#" id="brand">Gestion Courriers</a>
+			<a href="#" class="toggle-nav" rel="tooltip" data-placement="bottom" title="Cacher le menu"><i class="icon-reorder"></i></a>
+			<ul class='main-nav'>
+				<li class="active">
+					<a href="index.html">
+						<span>Accueil</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" data-toggle="dropdown" class='dropdown-toggle'>
+						<span>Courriers</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="#">Courriers arrivés</a>
+						</li>
+						<li>
+							<a href="#">Courriers en départ</a>
+						</li>
+						<li>
+							<a href="#">Courriers internes</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="contacts.aspx" data-toggle="dropdown" class='dropdown-toggle'>
+						<span>Contacts</span>
+					</a>
+				</li>
+				
+			</ul>
+			<div class="user">
+				<div class="dropdown">
+					<a href="#" class='dropdown-toggle' data-toggle="dropdown"><% Response.Write((Session["type"].Equals("UA")) ? (((GestionCourrier.Metier.AgentUA)Session["user"]).getNom() + " " + ((GestionCourrier.Metier.AgentUA)Session["user"]).getPrenom()) : (((GestionCourrier.Metier.AgentBO)Session["user"]).getNom() + " " + ((GestionCourrier.Metier.AgentBO)Session["user"]).getPrenom())); %> <img src="img/demo/user-avatar.jpg" alt=""></a>
+					<ul class="dropdown-menu pull-right">
+						<li>
+							<a href="#">Profil</a>
+						</li>
+						<li>
+							<a href="#">Paramètres</a>
+						</li>
+						<li>
+							<a href="deconnexion.aspx">Deconnexion</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid" id="content">
+		<div id="left">
+
+			<div class="subnav">
+				<div class="subnav-title">
+					<a href="#" class='toggle-subnav'><i class="icon-angle-down"></i><span>Navigation</span></a>
+				</div>
+				<ul class="subnav-menu">
+					<li class='dropdown'>
+						<a href="#" data-toggle="dropdown">Courriers</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="cour_arrive.aspx">Courriers arrivés</a>
+							</li>
+							<li>
+								<a href="#">Courriers en départ</a>
+							</li>
+							<li>
+								<a href="#">Courriers internes</a>
+							</li>
+							
+							
+						</ul>
+					</li>
+					<li>
+						<a href="contacts.aspx">Contacts</a>
+					</li>
+					<li>
+						<a href="#">Réaffectations</a>
+					</li>
+					<li>
+						<a href="#">Copies des courriers</a>
+					</li>
+				</ul>
+			</div>
+			
+		</div>
+		<div id="main">
+			<div class="container-fluid">
+				<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+				</asp:ContentPlaceHolder>
+			</div>
+		</div></div>
+</form>
+	</body>
+
+	</html>
+
+
+
