@@ -25,6 +25,11 @@ namespace GestionCourrier.Metier
             this.date_cloture = date_cloture;
             this.agent = agent;
         }
+
+        public Dossier(string reference)
+        {
+            this.reference = reference;
+        }
         public void setReference(string reference)
         {
             this.reference = reference;

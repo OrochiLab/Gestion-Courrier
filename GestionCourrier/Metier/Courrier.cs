@@ -8,7 +8,7 @@ namespace GestionCourrier.Metier
     public abstract class Courrier
     {
         private string reference;
-        private string type;
+        private string typecr;
         private string nature;
         private DateTime date_creation;
         private string objet;
@@ -17,18 +17,20 @@ namespace GestionCourrier.Metier
         private bool reponse;
         private Courrier courrier_reponse;
         private AgentBO agentbo;
+        private Dossier dossier;
 
         public Courrier() { }
-        public Courrier(string reference,string type,string nature,DateTime date_creation,string objet,string etat,AgentUA agentua,bool reponse)
+        public Courrier(string reference,string type,string nature,DateTime date_creation,string objet,string etat,AgentUA agentua,bool reponse,Dossier dossier)
         {
             this.reference = reference;
-            this.type = type;
+            this.typecr = type;
             this.nature = nature;
             this.date_creation = date_creation;
             this.objet = objet;
             this.etat = etat;
             this.agentua = agentua;
             this.reponse = reponse;
+            this.dossier = dossier;
         }
 
         public void setReference(string reference)
@@ -41,13 +43,13 @@ namespace GestionCourrier.Metier
             return this.reference;
         }
 
-        public void setType(string type)
+        public void setTypecr(string type)
         {
-            this.type = type;
+            this.typecr = type;
         }
-        public string getType()
+        public string getTypecr()
         {
-            return this.type;
+            return this.typecr;
         }
 
         public void setNature(string nature)
@@ -124,6 +126,14 @@ namespace GestionCourrier.Metier
         public AgentBO getAgentBO()
         {
             return this.agentbo;
+        }
+        public void setDossier(Dossier dossier)
+        {
+            this.dossier = dossier;
+        }
+        public Dossier getDossier()
+        {
+            return this.dossier;
         }
     }
 }

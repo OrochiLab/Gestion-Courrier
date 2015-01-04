@@ -9,7 +9,7 @@ namespace GestionCourrier.Metier
     {
         List<Contact> destinataires=new List<Contact>();
         public CourrierDepart() { }
-        public CourrierDepart(string reference,string type,string nature,DateTime date_creation,string objet,string etat,AgentUA agentua,bool reponse) : base(reference, type, nature, date_creation, objet, etat, agentua,reponse)
+        public CourrierDepart(string reference,string type,string nature,DateTime date_creation,string objet,string etat,AgentUA agentua,bool reponse,Dossier dossier) : base(reference, type, nature, date_creation, objet, etat, agentua,reponse,dossier)
         {
 
         }

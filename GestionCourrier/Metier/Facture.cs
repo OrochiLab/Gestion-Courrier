@@ -11,7 +11,7 @@ namespace GestionCourrier.Metier
         private float montant;
 
         public Facture() { }
-        public Facture(string reference,string type,string nature,DateTime date_creation,string objet,string etat,AgentUA agentua,bool reponse,DateTime date_courrier,DateTime date_arrivee,string typec,Contact expediteur,string device,float montant) : base(reference,type,nature,date_creation,objet,etat,agentua,reponse,date_courrier,date_arrivee,typec,expediteur)
+        public Facture(string reference,string type,string nature,DateTime date_creation,string objet,string etat,AgentUA agentua,bool reponse,Dossier dossier,DateTime date_courrier,DateTime date_arrivee,string typec,Contact expediteur,string device,float montant) : base(reference,type,nature,date_creation,objet,etat,agentua,reponse,dossier,date_courrier,date_arrivee,typec,expediteur)
         {
             this.device = device;
             this.montant = montant;

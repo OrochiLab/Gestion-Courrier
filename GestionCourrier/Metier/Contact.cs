@@ -20,6 +20,10 @@ namespace GestionCourrier.Metier
             this.adresse = adresse;
             this.type = type;
         }
+        public Contact(string nom)
+        {
+            this.nom = nom;
+        }
         public void setId(int id)
         {
             this.id = id;

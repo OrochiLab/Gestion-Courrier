@@ -14,7 +14,7 @@ namespace GestionCourrier.Metier
 
 
         public CourrierArriveInterne() { }
-        public CourrierArriveInterne(string reference,string type,string nature,DateTime date_creation,string objet,string etat,AgentUA agentua,bool reponse,DateTime date_courrier,DateTime date_arrivee,string typec,Contact expediteur) : base(reference, type, nature, date_creation, objet, etat, agentua,reponse)
+        public CourrierArriveInterne(string reference,string type,string nature,DateTime date_creation,string objet,string etat,AgentUA agentua,bool reponse,Dossier dossier,DateTime date_courrier,DateTime date_arrivee,string typec,Contact expediteur) : base(reference, type, nature, date_creation, objet, etat, agentua,reponse,dossier)
         {
             this.date_courrier = date_courrier;
             this.date_arrivee = date_arrivee;
@@ -22,6 +22,15 @@ namespace GestionCourrier.Metier
             this.expediteur = expediteur;
         }
 
+        public void setType(string type)
+        {
+            this.type = type;
+        }
+
+        public string getType()
+        {
+            return this.type;
+        }
         public void setDate_Courrier(DateTime date_courrier)
         {
             this.date_courrier = date_courrier;
