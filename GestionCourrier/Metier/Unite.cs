@@ -23,6 +23,10 @@ namespace GestionCourrier.Metier
             this.id = id;
             this.nom = nom;
         }
+        public Unite(string nom)
+        {
+            this.nom = nom;
+        }
 
         public void setId(int id)
         {

@@ -21,7 +21,10 @@ namespace GestionCourrier.Metier
             this.type = type;
             this.expediteur = expediteur;
         }
-
+        public CourrierArriveInterne(string reference) : base(reference)
+        {
+            
+        }
         public void setType(string type)
         {
             this.type = type;

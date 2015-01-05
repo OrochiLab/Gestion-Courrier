@@ -32,6 +32,10 @@ namespace GestionCourrier.Metier
             this.reponse = reponse;
             this.dossier = dossier;
         }
+        public Courrier(string reference)
+        {
+            this.reference = reference;
+        }
 
         public void setReference(string reference)
         {

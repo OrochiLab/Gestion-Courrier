@@ -15,7 +15,14 @@ namespace GestionCourrier
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
+            List<String> csr = CourrierService.getCourriresAvecReponses();
+            ref_cour_rep.Items.Clear();
+            ref_cour_rep.Items.AddRange(csr.Select(co => new ListItem()
+            {
+                Text = co , Value = co
+            }).ToArray());
+
             List<Dossier> d = DossierService.getRefDossiers();
             ref_dos.Items.Clear();
             ref_dos.Items.AddRange(d.Select(dos => new ListItem()
@@ -41,6 +48,7 @@ namespace GestionCourrier
             unit.DataBind();
             expediteur.DataBind();
             ref_dos.DataBind();
+            ref_cour_rep.DataBind();
         }
 
         protected void unit_SelectedIndexChanged(object sender, EventArgs e)
@@ -103,8 +111,18 @@ namespace GestionCourrier
             //Response.Write(String.Format("Insert into courrier_arrive_interne values('{0}','{1}','{2}','{3}',(select id_contact from contacts where nom='{4}'))", c.getReference(), c.getDate_Courrier(), c.getDate_Arrivee(), c.getType(), c.getExpediteur().getNom()));
             //Response.Write(String.Format("Insert into facture values ('{0}','{1}',{2})", c.getReference(), ((Facture)c).getDevice(), ((Facture)c).getMontant() + "").Replace(",", "."));
             //Response.Write(CourrierService.ajouterCourrier(c)?"OMG courrier ajouté !":"Non gros fail !");
-            result.Text = CourrierService.ajouterCourrier(c) ? "Le courrier a été ajouté avec succès !" : "Echec d'ajout, veuillez vérifier les données entrés";
+            if (CourrierService.ajouterCourrier(c))
+            {
+                CourrierService.repondreCourrier(id_ref_cour_rep.Value, ref_cour.Text.ToString());
+                result.Text = "Le courrier a été ajouté avec succès !";
+            }
+            else
+            {
+                result.Text=  "Echec d'ajout, veuillez vérifier les données entrés";
+            }
+            
             //Response.Write(cour_rep.Checked ? "Réponse au courrier : " + id_ref_cour_rep.Value : "Ce courrier n'est pas une réponse ");
+            
         }
 
     }

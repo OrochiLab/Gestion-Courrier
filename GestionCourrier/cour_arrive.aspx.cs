@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestionCourrier.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,7 @@ namespace GestionCourrier
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            //Response.Write(CourrierService.getCourriers("interne").Count + " elements a afficher");
         }
 
         protected void btn_ajout_Click(object sender, EventArgs e)

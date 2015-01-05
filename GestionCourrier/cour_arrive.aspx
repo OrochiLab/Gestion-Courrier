@@ -50,44 +50,80 @@
 									<thead>
 										<tr class='thefilter'>
 											<th>Reference</th>
-											<th>Date creation</th>
-                                            <th>Date courrier</th>
-                                            <th>Date arrivée</th>
-											<th class='hidden-350'>Etat</th>
-											<th class='hidden-1024'>Requis réponse ?</th>
-											<th class='hidden-480'>CSS grade</th>
-                                            <th class="hidden-350"><h1>lol</h1></th>
+											<th>Dossier</th>
+                                            <th>Expediteur</th>
+                                            <th>Type</th>
+											<th class='hidden-350'>Nature</th>
+											<th class='hidden-1024'>Date création</th>
+											<th class='hidden-480'>Objet</th>
+                                            <th>Agent UA</th>
+                                            <th>Unité administrative</th>
+                                            <th class="hidden-350">Réponse</th>
+                                            <th>Facture ?</th>
+                                            <th>Etat</th>
+                                            <th>Opérations</th>
 										</tr>
 										<tr>
 											<th>Reference</th>
-											<th>Date creation</th>
-                                            <th>Date courrier</th>
-                                            <th>Date arrivée</th>
-											<th class='hidden-350'>Etat</th>
-											<th class='hidden-1024'>Requis réponse ?</th>
-											<th class='hidden-480'>CSS grade</th>
-                                            <th class="hidden-350">Options</th>
+											<th>Dossier</th>
+                                            <th>Expediteur</th>
+                                            <th>Type</th>
+											<th class='hidden-350'>Nature</th>
+											<th class='hidden-1024'>Date création</th>
+											<th class='hidden-480'>Objet</th>
+                                            <th>Agent UA</th>
+                                            <th>Unité administrative</th>
+                                            <th class="hidden-350">Réponse</th>
+                                            <th>Facture ?</th>
+                                            <th>Etat</th>
+                                            <th>Opérations</th>
 										</tr>
 									</thead>
 									<tbody>
+                                        <%
+                                            List<GestionCourrier.Metier.CourrierArriveInterne> liste;
+                                            if(Session["type"].Equals("BO"))
+                                            {
+                                                liste = GestionCourrier.Services.CourrierService.getCourriers("arrive");
+                                            }
+                                            else
+                                            { 
+                                                liste = GestionCourrier.Services.CourrierService.getCourriers("arrive",((GestionCourrier.Metier.AgentUA)Session["user"]).getId());
+                                            }
+                                                
+                                            foreach(GestionCourrier.Metier.CourrierArriveInterne c in liste)
+                                            { 
+                                             %>
 										<tr>
-											<td>Trident</td>
-											<td>
-												Internet
-													Explorer 4.0
-											</td>
-                                            <td>Trident</td>
-                                            <td>Trident</td>
-											<td class='hidden-350'>Win 95+</td>
-											<td class='hidden-1024'>4</td>
-											<td class='hidden-480'>X</td>
-                                            <td class='hidden-480'>
-												<a href="#" class="btn" rel="tooltip" title="Détails"><i class="icon-search"></i></a>
-												<a href="#" class="btn" rel="tooltip" title="Modifier"><i class="icon-edit"></i></a>
-												<a href="#" class="btn" rel="tooltip" title="Supprimer"><i class="icon-remove"></i></a>
+											<td><% Response.Write(c.getReference()); %></td>
+											<td><% Response.Write((c.getDossier()!=null)?c.getDossier().getReference():"Pas de dossier"); %></td>
+                                            <td><% Response.Write(c.getExpediteur().getNom()); %></td>
+                                            <td><% Response.Write(c.getTypecr()); %></td>
+											<td><% Response.Write(c.getNature()); %></td>
+											<td><% Response.Write(c.getDate_creation().ToString().Substring(0,10)); %></td>
+											<td><% Response.Write(c.getObjet()); %></td>
+                                            <td><% Response.Write(c.getAgentUA().getNom()+" "+c.getAgentUA().getPrenom()); %></td>
+                                            <td><% Response.Write(c.getAgentUA().getUnite().getNom()); %></td>
+                                            <td><% Response.Write((c.getReponse())?((c.getCourrier_Reponse()!=null)?c.getCourrier_Reponse().getReference():"En attente"):"Sans accusé"); %></td>
+                                            <td><% Response.Write((c is GestionCourrier.Metier.Facture)?((GestionCourrier.Metier.Facture)c).getMontant()+" "+((GestionCourrier.Metier.Facture)c).getDevice():"Non"); %></td>
+                                            <td><% Response.Write(c.getEtat()); %></td>
+                                            <td style="text-align:center;" class='hidden-480'>
+                                                <%if(Session["type"].Equals("UA") && c.getEtat().Equals("Cree"))
+                                                  {
+                                                  %>
+                                                <a style="width:25px;" href="recevoir_courrier.aspx?ref=<% Response.Write(c.getReference()); %>" class="btn btn-success" rel="tooltip" title="Reçu"><i class="icon-check"></i></a><br />
+												
+                                                <%} %>
+												<a style="width:25px;" href="details_courrier.aspx?ref=<% Response.Write(c.getReference()); %>" class="btn btn-info" rel="tooltip" title="Détails"><i class="icon-search"></i></a><br />
+												<%if(Session["type"].Equals("BO"))
+                                                  {
+                                                  %>
+                                                <a style="width:25px;" href="supprimer_courrier.aspx?ref=<% Response.Write(c.getReference()); %>" class="btn btn-danger" rel="tooltip" title="Supprimer"><i class="icon-remove"></i></a>
+                                                <%} %>
 											</td>
 										</tr>
-										
+										<%
+                                        } %>
 									</tbody>
 								</table>
 							</div>

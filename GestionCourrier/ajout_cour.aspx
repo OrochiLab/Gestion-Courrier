@@ -45,7 +45,8 @@
 							<h3><i class="icon-edit"></i> Ajout d'un nouveau courrier</h3>
 						</div>
 						<div class="box-content">
-								<asp:Label ID="result" runat="server" Text=""></asp:Label><br />
+                            
+								<asp:Label ID="result" runat="server" Text=""></asp:Label><br /><br />
                             <div class="control-group">
 										<div class="controls">
 											<div class="input-xlarge">
