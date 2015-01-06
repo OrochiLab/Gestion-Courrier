@@ -169,7 +169,7 @@ namespace GestionCourrier.Services
         {
             SqlConnection cnx = new SqlConnection(ConfigurationManager.AppSettings["cnx"].ToString());
             cnx.Open();
-            SqlCommand cmd = new SqlCommand(String.Format("select cou.ref_cour,f.ref_cour,cou.type,nature,date_creation,objet,etat,reponse,courrier_reponse,ref_dos,c.nom,device,montant,ag.nom,ag.prenom,un.nom from courrier cou,contacts c,agent_ua ag,unites un,courrier_arrive_interne cai  LEFT OUTER JOIN facture f ON cai.ref_cour=f.ref_cour where cou.ref_cour=cai.ref_cour and cai.id_contact=c.id_contact and cou.id_agent_ua=ag.id_agent and ag.id_unit=un.id_unit and cou.ref_cour = '{0}'",ref_cour), cnx);
+            SqlCommand cmd = new SqlCommand(String.Format("select cou.ref_cour,f.ref_cour,cou.type,nature,date_creation,objet,etat,reponse,courrier_reponse,ref_dos,c.nom,device,montant,ag.nom,ag.prenom,un.nom,date_cour,date_arrivee from courrier cou,contacts c,agent_ua ag,unites un,courrier_arrive_interne cai  LEFT OUTER JOIN facture f ON cai.ref_cour=f.ref_cour where cou.ref_cour=cai.ref_cour and cai.id_contact=c.id_contact and cou.id_agent_ua=ag.id_agent and ag.id_unit=un.id_unit and cou.ref_cour = '{0}'", ref_cour), cnx);
             SqlDataReader dr = cmd.ExecuteReader();
             
             CourrierArriveInterne c = new CourrierArriveInterne();
@@ -200,6 +200,8 @@ namespace GestionCourrier.Services
                         ((Facture)c).setMontant((float)dr.GetSqlDecimal(12).Value);
                     }
                     c.setAgentUA(new AgentUA(dr.GetString(13), dr.GetString(14), new Unite(dr.GetString(15))));
+                    c.setDate_Courrier(dr.GetDateTime(16));
+                    c.setDate_Arrivee(dr.GetDateTime(17));
                 }
 
                 cnx.Close();
