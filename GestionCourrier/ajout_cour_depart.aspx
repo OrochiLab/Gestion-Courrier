@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ajout_cour.aspx.cs" Inherits="GestionCourrier.ajout_cour" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ajout_cour_depart.aspx.cs" Inherits="GestionCourrier.ajout_cour_depart" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<div class="page-header">
+ <div class="page-header">
 				<div class="pull-left">
 					<h1>Ajout d'un nouveau courrier</h1>
 				</div>
@@ -69,16 +69,16 @@
 									            </div>
 
                                                 <div class="control-group">
-										            <label for="expediteur" class="control-label">Expéditeur: </label>
+										            <label for="destinataire_cour" class="control-label">Destinataire: </label>
 										            <div class="controls">
-                                                        <asp:DropDownList ID="expediteur" class='input-block-level chosen-select input-medium' runat="server" OnSelectedIndexChanged="unit_SelectedIndexChanged">
+                                                        <asp:DropDownList ID="destinataire_cour" runat="server" >
                                                             <asp:ListItem Value="3">test3</asp:ListItem>
                                                             <asp:ListItem Value="2">test2</asp:ListItem>
                                                             <asp:ListItem Value="1">test1</asp:ListItem>
                                                         </asp:DropDownList>
                                                         
 										            </div>
-                                                    <asp:HiddenField id="id_expediteur" runat="server" />
+                                                    <asp:HiddenField id="id_destinataire" runat="server" />
 									            </div>
 
                                                 <div class="control-group">
@@ -110,20 +110,6 @@
 									            </div>
 
                                                 <div class="control-group">
-										            <label for="datecr" class="control-label">Date du courrier (date du rédaction par l'expediteur) : </label>
-										            <div class="controls">
-                                                        <asp:TextBox runat="server" ID="datecour" name="datecour" data-rule-required="true" CssClass="input-medium datepick"/>
-										            </div>
-									            </div>
-
-                                                <div class="control-group">
-										            <label for="datecr" class="control-label">Date d'arrivée du courrier : </label>
-										            <div class="controls">
-                                                        <asp:TextBox runat="server" ID="datearr" name="datearr" data-rule-required="true" CssClass="input-medium datepick"/>
-										            </div>
-									            </div>
-                                                    
-                                                <div class="control-group">
                                                 <asp:CheckBox  style="float:left;margin-right:5px;" ID="cour_rep" runat="server" class='icheck-me' data-skin="flat" data-color="green"/><label for="ContentPlaceHolder1_cour_rep" class="control-label">Ce courrier est une réponse </label>
                                                 <br />
                                                 <div id="reponse_div">
@@ -140,55 +126,9 @@
 
                                                 </div>
                                                 </div>
-
-                                                <div class="control-group">
-										            <label for="type" class="control-label">Unité administratif: </label>
-										            <div class="controls">
-                                                        <asp:DropDownList ID="unit" class='input-block-level chosen-select input-medium' runat="server" OnSelectedIndexChanged="unit_SelectedIndexChanged">
-                                                            <asp:ListItem Value="3">test3</asp:ListItem>
-                                                            <asp:ListItem Value="2">test2</asp:ListItem>
-                                                            <asp:ListItem Value="1">test1</asp:ListItem>
-                                                        </asp:DropDownList>
-                                                        
-										            </div>
-                                                    <asp:HiddenField id="id_unit" runat="server" />
-									            </div>
-
-                                                <div class="control-group">
-										            <label for="type" class="control-label">Suivi par l'agent : </label>
-										            <div id="agent_ajax" class="controls">
-                                                        <asp:DropDownList ID="agent_ua" class='input-block-level chosen-select input-medium' runat="server">
-                                                            <asp:ListItem Value="0">Selectionnez un agent</asp:ListItem>
-                                                        </asp:DropDownList>
-										            </div>
-                                                    <asp:HiddenField id="id_agent_ua" runat="server" />
-									            </div>
-
-                                                    <asp:RadioButtonList ID="typecr" runat="server" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" TextAlign="Left">
-                                                        <asp:ListItem Value="arr">Courrier arriv&#233;</asp:ListItem>
-                                                        <asp:ListItem Value="int">Courrier interne</asp:ListItem>
-                                                    </asp:RadioButtonList>
                                                 <br />
                                                 <asp:CheckBox  style="float:left;margin-right:5px;" ID="reponse" runat="server" class='icheck-me' data-skin="flat" data-color="green"/><label for="ContentPlaceHolder1_reponse" class="control-label">Requis une réponse</label>
-                                                <br />       
-                                                <asp:CheckBox  style="float:left;margin-right:5px;" ID="fact" runat="server" class='icheck-me' data-skin="flat" data-color="green"/><label for="ContentPlaceHolder1_fact" class="control-label">Facture </label>
                                                 <br />
-                                                <div id="fact_div">
-                                                        <div class="control-group">
-										                    <label for="type" class="control-label">Device : </label>
-										                    <div class="controls">
-                                                                <asp:TextBox runat="server" ID="device" name="device"  data-rule-required="true" CssClass="input-medium"/>
-										                    </div>
-									                    </div>
-
-                                                    <div class="control-group">
-										                <label for="nature" class="control-label">Montant : </label>
-										                <div class="controls">
-                                                            <asp:TextBox runat="server" ID="montant" name="montant"  data-rule-required="true" CssClass="input-medium"/>
-										                </div>
-									                </div>
-                                                </div>
-                                                
                                             </div>
                                             </div>
 										</div>
@@ -196,7 +136,7 @@
 
 									
 								<div class="form-actions">
-									<asp:Button ID="btn_ajout_cr" runat="server" Text="Valider" class="btn btn-primary" style="margin-bottom : 20px;" OnClick="btn_ajout_cr_Click" />
+									<asp:Button ID="btn_ajout_cr" runat="server" Text="Valider" class="btn btn-primary" style="margin-bottom : 20px;" OnClick="btn_ajout_cr_dep_Click" />
 								</div>
 								
 						</div>
@@ -275,13 +215,13 @@
         $("#reponse_div").hide();
 
         $("#ContentPlaceHolder1_btn_ajout_cr").click(function (e) {
-            
+
             //console.log('avant ' + $("#ContentPlaceHolder1_id_agent_ua").val());
             $("#ContentPlaceHolder1_id_ref_dos").val($("#ContentPlaceHolder1_ref_dos_chzn a span").html());
             $("#ContentPlaceHolder1_id_unit").val($("#ContentPlaceHolder1_unit_chzn a span").html());
-            $("#ContentPlaceHolder1_id_agent_ua").val($("#ContentPlaceHolder1_agent_ua").val());
+            $("#ContentPlaceHolder1_id_agent_ua").val($("#ContentPlaceHolder1_agent_ua_chzn a span").html());
             $("#ContentPlaceHolder1_id_ref_cour_rep").val($("#ContentPlaceHolder1_ref_cour_rep_chzn a span").html());
-            $("#ContentPlaceHolder1_id_expediteur").val($("#ContentPlaceHolder1_expediteur_chzn a span").html());
+            $("#ContentPlaceHolder1_id_destinataire").val($("#ContentPlaceHolder1_destinataire_cour").val());
 
             //console.log('apres : ' + $("#ContentPlaceHolder1_id_agent_ua").val());
             //e.preventDefault();
@@ -289,13 +229,12 @@
 
         $("#ContentPlaceHolder1_unit").on("change", function () {
 
-            $.get("uagent.aspx?id="+this.value, function (data, status) {
+            $.get("uagent.aspx?id=" + this.value, function (data, status) {
                 $("#agent_ajax").html(data);
             });
         });
         $('#ContentPlaceHolder1_opt_dos').click(function () {
-            if($("#ContentPlaceHolder1_opt_dos").is(':checked'))
-            {
+            if ($("#ContentPlaceHolder1_opt_dos").is(':checked')) {
                 $("#ContentPlaceHolder1_ref_dos_chzn").show();
                 $("#ContentPlaceHolder1_link_ajt_dos").show();
             }
@@ -310,7 +249,7 @@
                 $("#fact_div").show();
             }
             else {
-                
+
                 $("#fact_div").hide();
             }
         });
@@ -328,6 +267,3 @@
 
 </script>
 </asp:Content>
-
-
-

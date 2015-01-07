@@ -31,8 +31,14 @@ namespace GestionCourrier
             }).ToArray());
 
 
+            
             List<Unite> l = UniteService.getUnites();
             unit.Items.Clear();
+            unit.Items.Add(new ListItem()
+            {
+                Text = "Choisissez une unité",
+                Value = "0"
+            });
             unit.Items.AddRange(l.Select(u => new ListItem(){
              Text = u.getNom(), Value= u.getId()+""   
             }).ToArray());
@@ -92,8 +98,9 @@ namespace GestionCourrier
             //Response.Write(" unité administrative : " +id_unit.Value+" ");
             //Response.Write("Agent de l'unité : " + id_agent_ua.Value.Split(new Char[] { '-' })[0] + " ");
             
-            c.setAgentUA(new AgentUA(Int32.Parse(id_agent_ua.Value.Split(new Char[]{'-'})[0])));
-
+            c.setAgentUA(new AgentUA(Int32.Parse(id_agent_ua.Value)));
+            
+            //.ToString().Split(new Char[]{'-'})[0]
             //Response.Write("Type courrier (interne/externe ) : " +typecr.SelectedValue.ToString() + " ");
             c.setType((typecr.SelectedValue.ToString().Equals("arr") ? "Arrive" : "Interne"));
 

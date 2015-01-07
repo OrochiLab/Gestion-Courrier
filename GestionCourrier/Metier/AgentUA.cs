@@ -45,6 +45,13 @@ namespace GestionCourrier.Metier
             this.prenom = prenom;
             this.unite = unite;
         }
+        public AgentUA(int id, string nom, string prenom,Unite unite)
+        {
+            this.id = id;
+            this.nom = nom;
+            this.prenom = prenom;
+            this.unite = unite;
+        }
         public AgentUA(int id)
         {
             this.id = id;

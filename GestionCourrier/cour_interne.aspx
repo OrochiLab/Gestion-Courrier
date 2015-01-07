@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="cour_arrive.aspx.cs" Inherits="GestionCourrier.cour_arrive" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="cour_interne.aspx.cs" Inherits="GestionCourrier.cour_interne" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="page-header">
 					<div class="pull-left">
@@ -28,7 +28,7 @@
 							<i class="icon-angle-right"></i>
 						</li>
 						<li>
-							<a href="#">Courriers arrivés</a>
+							<a href="#">Courriers internes</a>
 						</li>
 					</ul>
 					<div class="close-bread">
@@ -49,8 +49,8 @@
                                     {
                                 %>
                                 <asp:Button ID="btn_ajout" runat="server" Text="Ajouter un courrier" class="btn btn-primary" style="margin-bottom : 20px;" OnClick="btn_ajout_Click1" />
-				                <%
-                                } %>
+				                <%}
+                                     %>
 								<table class="table table-hover table-nomargin table-bordered dataTable-columnfilter dataTable">
 									<thead>
 										<tr class='thefilter'>
@@ -89,11 +89,11 @@
                                             List<GestionCourrier.Metier.CourrierArriveInterne> liste;
                                             if(Session["type"].Equals("BO"))
                                             {
-                                                liste = GestionCourrier.Services.CourrierService.getCourriers("arrive");
+                                                liste = GestionCourrier.Services.CourrierService.getCourriers("interne");
                                             }
                                             else
                                             { 
-                                                liste = GestionCourrier.Services.CourrierService.getCourriers("arrive",((GestionCourrier.Metier.AgentUA)Session["user"]).getId());
+                                                liste = GestionCourrier.Services.CourrierService.getCourriers("interne",((GestionCourrier.Metier.AgentUA)Session["user"]).getId());
                                             }
                                                 
                                             foreach(GestionCourrier.Metier.CourrierArriveInterne c in liste)

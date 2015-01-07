@@ -14,6 +14,13 @@ namespace GestionCourrier.Metier
         private AgentUA agent_courant;
         private AgentUA agent_cible;
 
+        public Reaffectation(AgentUA agent_courant,AgentUA agent_cible, DateTime date_reaf,string motif)
+        {
+            this.date_reaf = date_reaf;
+            this.motif = motif;
+            this.agent_courant = agent_courant;
+            this.agent_cible = agent_cible;
+        }
         public Reaffectation(int id,DateTime date_reaf,string motif,CourrierArriveInterne courrier,AgentUA agent_courant,AgentUA agent_cible)
         {
             this.id = id;

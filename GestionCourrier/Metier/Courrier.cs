@@ -5,7 +5,7 @@ using System.Web;
 
 namespace GestionCourrier.Metier
 {
-    public abstract class Courrier
+    public class Courrier
     {
         private string reference;
         private string typecr;

@@ -114,7 +114,7 @@
 			<a href="#" class="toggle-nav" rel="tooltip" data-placement="bottom" title="Cacher le menu"><i class="icon-reorder"></i></a>
 			<ul class='main-nav'>
 				<li class="active">
-					<a href="index.html">
+					<a href="index.aspx">
 						<span>Accueil</span>
 					</a>
 				</li>
@@ -125,18 +125,18 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="#">Courriers arrivés</a>
+							<a href="cour_arrive.aspx">Courriers arrivés</a>
 						</li>
 						<li>
-							<a href="#">Courriers en départ</a>
+							<a href="cour_depart.aspx">Courriers en départ</a>
 						</li>
 						<li>
-							<a href="#">Courriers internes</a>
+							<a href="cour_interne.aspx">Courriers internes</a>
 						</li>
 					</ul>
 				</li>
 				<li>
-					<a href="contacts.aspx" data-toggle="dropdown" class='dropdown-toggle'>
+					<a href="contacts.aspx" class='dropdown-toggle'>
 						<span>Contacts</span>
 					</a>
 				</li>
@@ -175,10 +175,10 @@
 								<a href="cour_arrive.aspx">Courriers arrivés</a>
 							</li>
 							<li>
-								<a href="#">Courriers en départ</a>
+								<a href="cour_depart.aspx">Courriers en départ</a>
 							</li>
 							<li>
-								<a href="#">Courriers internes</a>
+								<a href="cour_interne.aspx">Courriers internes</a>
 							</li>
 							
 							
@@ -188,7 +188,7 @@
 						<a href="contacts.aspx">Contacts</a>
 					</li>
 					<li>
-						<a href="#">Réaffectations</a>
+						<a href="#">Dossiers</a>
 					</li>
 					<li>
 						<a href="#">Copies des courriers</a>

@@ -7,20 +7,34 @@ namespace GestionCourrier.Metier
 {
     public class CourrierDepart : Courrier
     {
-        List<Contact> destinataires=new List<Contact>();
+        Contact destinataire=new Contact();
+        private string p;
         public CourrierDepart() { }
-        public CourrierDepart(string reference,string type,string nature,DateTime date_creation,string objet,string etat,AgentUA agentua,bool reponse,Dossier dossier) : base(reference, type, nature, date_creation, objet, etat, agentua,reponse,dossier)
+        public CourrierDepart(string reference, string type, string nature, DateTime date_creation, string objet, string etat, AgentUA agentua, bool reponse, Dossier dossier, Contact destinataire) 
+            : base(reference, type, nature, date_creation, objet, etat, agentua,reponse,dossier)
         {
-
+            this.destinataire = destinataire;
         }
 
-        public void setDestinataires(List<Contact> destinataires)
+        public CourrierDepart(string p)
         {
-            this.destinataires = destinataires;
+            // TODO: Complete member initialization
+            this.p = p;
         }
-        public List<Contact> getDestinataires()
+
+        public void setDestinataire(Contact destinataire)
         {
-            return this.destinataires;
+            this.destinataire = destinataire;
+        }
+        public Contact getDestinataire()
+        {
+            return this.destinataire;
+        }
+
+
+        internal void setTypecr()
+        {
+            throw new NotImplementedException();
         }
     }
 }

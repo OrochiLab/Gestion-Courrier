@@ -56,17 +56,21 @@
 									</ul>
 									<div class="tab-content padding tab-content-inline tab-content-bottom">
 										<div class="tab-pane active" id="details">
-											<div class="alert alert-info">
-									<h4>Information!</h4>
-									<p>Cliquez simplement sur l'élément que vous désirez modifier, a noter que les éléments en gras ne sont pas modifiables !</p>
-								</div>
+										<div class="alert alert-info">
+									        <h4>Information!</h4>
+									        <p>Cliquez simplement sur l'élément que vous désirez modifier, a noter que les éléments en gras ne sont pas modifiables !</p>
+								        </div>
+                                        <div id="resultat" class="alert alert-info">
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+									        <h5 id="reponse_modif">Reponse modification!</h5>
+								        </div>
 								<table id="user" class="table table-bordered table-striped table-force-topborder" style="clear: both">
 									<tbody> 
 										<tr>         
 											<td width="15%">Réference : </td>
 											<td width="35%"><asp:HyperLink style="font-weight:bold;" ID="ref_cour" runat="server">Test</asp:HyperLink></td>
 											<td width="15%">Agent de l'unité: </td>
-											<td width="35%"><asp:HyperLink style="font-weight:bold;" ID="agentua" runat="server">Test</asp:HyperLink></td>
+											<td width="35%"><asp:HyperLink style="font-weight:bold;" ID="agentua" runat="server">Test</asp:HyperLink> De l'unité : <asp:HyperLink style="font-weight:bold;" ID="uniteua" runat="server">Test</asp:HyperLink></td>
 										</tr>
 
                                         <tr>         
@@ -119,22 +123,186 @@
 								</table>
 										</div>
 										<div class="tab-pane" id="reaffect">
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto vel labore sed odio laudantium in eum aliquid reiciendis blanditiis consequatur excepturi dicta quisquam soluta quis neque nostrum expedita temporibus illum aliquam voluptatibus a cumque sit nulla et consectetur ex maiores sequi culpa suscipit. Voluptate quae id consequatur consequuntur exercitationem cumque beatae obcaecati laudantium? Ea tenetur animi itaque eos aperiam molestiae reprehenderit eaque perferendis iusto beatae sapiente fuga ex ab fugit excepturi nesciunt blanditiis nostrum ipsa. Facere repellendus tempore deleniti neque nihil commodi nemo recusandae eveniet error eligendi tenetur quia et consequuntur cupiditate facilis esse aspernatur praesentium reprehenderit dolorum accusantium ipsum cum voluptas quisquam ea atque aliquid omnis at quam magnam rem cumque repellat maxime mollitia nulla architecto sequi saepe veritatis optio amet culpa consectetur ducimus sapiente doloribus corporis odit adipisci. Commodi ab culpa accusamus maxime amet dolore at necessitatibus fugit beatae id asperiores doloribus perspiciatis expedita quisquam itaque iusto eos ad quibusdam rem fuga ipsum ut quasi. Unde explicabo quae quod saepe maxime nulla ut. Aperiam possimus repellendus deleniti quasi quaerat aliquam veniam numquam doloremque sequi perspiciatis eligendi provident nam voluptates nihil earum saepe maxime mollitia maiores porro animi nulla odit sapiente atque totam illo! Accusantium quis corporis omnis et.
+										
+                                            <div class="control-group">
+                                            <div class="controls">
+                                                <asp:Label ID="resultat_reaf" runat="server" Text=""></asp:Label>
+                                             <div class="control-group">
+										            <label for="unit" class="control-label">Unité administratif: </label>
+										            <div class="controls">
+                                                        <asp:DropDownList ID="unit" runat="server">
+                                                            <asp:ListItem Value="3">test3</asp:ListItem>
+                                                            <asp:ListItem Value="2">test2</asp:ListItem>
+                                                            <asp:ListItem Value="1">test1</asp:ListItem>
+                                                        </asp:DropDownList>
+                                                        
+										            </div>
+                                                    <asp:HiddenField id="id_unit" runat="server" />
+									            </div>
+
+                                                <div class="control-group">
+										            <label for="agent_ua" class="control-label">Suivi par l'agent : </label>
+										            <div id="agent_ajax" class="controls" style="width:25%;">
+                                                        <asp:DropDownList ID="agent_ua" runat="server">
+                                                            <asp:ListItem Value="0">Selectionnez une agent</asp:ListItem>
+                                                        </asp:DropDownList>
+										            </div>
+									            </div>
+                                                <asp:HiddenField id="id_agent_ua" runat="server" />
+
+                                                <div class="control-group">
+										            <label for="datereaf" class="control-label">Date de réaffectation : </label>
+										            <div class="controls">
+                                                        <asp:TextBox runat="server" ID="datereaf" name="datereaf" data-rule-required="true" CssClass="input-medium datepick"/>
+										            </div>
+									            </div>
+
+                                                <div class="control-group">
+										                <label for="adresse" class="control-label">Motif :</label>
+										                <div class="controls">
+											                <asp:TextBox id="motif" TextMode="multiline" Columns="50" Rows="2" runat="server"  class="input-block-level"/>
+										                </div>
+									            </div>
+                                                <asp:Button runat="server" id="btn_enregistrer" Text="Enregistrer" CssClass="btn btn-primary" OnClick="btn_enregistrer_Click" />
+                                               </div>
+                                            </div>
+
+                                   <table class="table table-hover table-nomargin">
+									<thead>
+										<tr>
+											<th>Agent précedent</th>
+                                            <th>Unité précedente</th>
+											<th>Agent cible</th>
+                                            <th>Unité cible</th>
+                                            <th>Date de réaffectation</th>
+                                            <th>Motif</th>
+										</tr>
+									</thead>
+									<tbody>
+                                        <%
+                                            List<GestionCourrier.Metier.Reaffectation> listereaf = GestionCourrier.Services.ReaffectationService.getReaffectations(ref_cour.Text.ToString());
+                                            foreach(GestionCourrier.Metier.Reaffectation reaf in listereaf)
+                                            { 
+                                             %>
+
+										<tr>
+											<td><% Response.Write(reaf.getAgent_Courant().getNom()+" "+reaf.getAgent_Courant().getPrenom()); %></td>
+                                            <td><% Response.Write(reaf.getAgent_Courant().getUnite().getNom()); %></td>
+                                            <td><% Response.Write(reaf.getAgent_Cible().getNom()+" "+reaf.getAgent_Cible().getPrenom()); %></td>
+                                            <td><% Response.Write(reaf.getAgent_Cible().getUnite().getNom()); %></td>
+                                            <td><% Response.Write(reaf.getDate_Reaf().ToString().Substring(0,10)); %></td>
+                                            <td><% Response.Write(reaf.getMotif()); %></td>
+										</tr>
+                                        <%
+                                        } %>
+
+									</tbody>
+								</table>
+
+
+
+
 										</div>
 										<div class="tab-pane" id="copies">
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque ipsum ab odio accusamus similique dicta ipsam dolor magni nemo? Laudantium numquam consectetur maiores quaerat totam cupiditate error repellendus eos quibusdam dolore ipsum sequi illo blanditiis voluptatibus veniam dicta alias tempore consequuntur reprehenderit dignissimos iste sit perferendis possimus quisquam id voluptatum explicabo ut ad accusamus neque. Commodi ipsam quia aperiam nisi id unde sapiente magnam reiciendis voluptate placeat in optio consequuntur culpa magni repudiandae veniam aut. Magni sed asperiores omnis error nemo cum minima illum rerum assumenda ipsa excepturi odit laborum doloremque iure temporibus consectetur in culpa libero iusto repellendus. Culpa perspiciatis nesciunt explicabo officiis beatae ipsam qui odio architecto asperiores ad amet aspernatur veniam ex voluptates cumque expedita reiciendis nobis incidunt harum praesentium a totam ut cum corrupti quia rem provident delectus fuga deserunt itaque aut fugiat veritatis necessitatibus inventore nisi enim aliquid quibusdam! Nihil ratione laboriosam accusamus. Iure sapiente iste odit voluptas sit reiciendis. Cum voluptatibus quia cupiditate cumque eveniet mollitia unde adipisci vel itaque ipsa est iste ducimus sed consequuntur ratione eaque voluptates et odit quod nemo quis aut repudiandae ipsum nostrum deserunt! Excepturi cum eos ut labore debitis facilis ipsum! Fugit eos dicta amet neque qui deserunt!
-										</div>
+										
+                                        
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                <asp:Label ID="resultat_copie" runat="server" Text=""></asp:Label>
+                                             <div class="control-group">
+										            <label for="unit_copie" class="control-label">Unité administratif: </label>
+										            <div class="controls">
+                                                        <asp:DropDownList ID="unit_copie" runat="server">
+                                                            <asp:ListItem Value="3">test3</asp:ListItem>
+                                                            <asp:ListItem Value="2">test2</asp:ListItem>
+                                                            <asp:ListItem Value="1">test1</asp:ListItem>
+                                                        </asp:DropDownList>
+                                                        
+										            </div>
+                                                 <asp:HiddenField id="id_unit_copie" runat="server" />
+									            </div>
+
+                                                <div class="control-group">
+										            <label for="id_destinataire" class="control-label">Destinataire: </label>
+										            <div class="controls">
+                                                        <asp:DropDownList ID="id_destinataire" runat="server">
+                                                            <asp:ListItem Value="3">test3</asp:ListItem>
+                                                            <asp:ListItem Value="2">test2</asp:ListItem>
+                                                            <asp:ListItem Value="1">test1</asp:ListItem>
+                                                        </asp:DropDownList>
+                                                        
+										            </div>
+                                                    <asp:HiddenField id="id_destinataire_copie" runat="server" />
+									            </div>
+
+                                                <div class="control-group">
+										                <label for="motif_copie" class="control-label">Motif :</label>
+										                <div class="controls">
+											                <asp:TextBox id="motif_copie" TextMode="multiline" Columns="50" Rows="2" runat="server"  class="input-block-level"/>
+										                </div>
+									            </div>
+                                                <asp:Button runat="server" id="btn_enregistrer_copie" Text="Enregistrer" CssClass="btn btn-primary" OnClick="btn_enregistrer_copie_Click" />
+                                               </div>
+                                            </div>
+
+                                   <table class="table table-hover table-nomargin">
+									<thead>
+										<tr>
+											<th>Unité administrative</th>
+                                            <th>Destinataire</th>
+											<th>Motif</th>
+										</tr>
+									</thead>
+									<tbody>
+                                        <%
+                                            List<GestionCourrier.Metier.Copie> listecopies = GestionCourrier.Services.CopieService.getCopies(ref_cour.Text.ToString());
+                                            foreach(GestionCourrier.Metier.Copie cop in listecopies)
+                                            { 
+                                             %>
+
+										<tr>
+											<td><% Response.Write(cop.getUnite().getNom()); %></td>
+                                            <td><% Response.Write(cop.getDestinataire().getNom()); %></td>
+                                            <td><% Response.Write(cop.getMotif()); %></td>
+										</tr>
+                                        <%
+                                        } %>
+									</tbody>
+								</table>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        </div>
 									</div>
 								</div>
 							</div>
 					</div>
 				</div>
     <script>
+        function requeteModification(colonne,valeur)
+        {
+            $.get("modifier_cour.aspx?ref_cour=" + $('#ContentPlaceHolder1_ref_cour').text() + "&colonne="+colonne+"&valeur=" + valeur, function (data, status) {
+                $("#reponse_modif").html(data);
+                $("#resultat").show();
+            });
+        }
+        $(document).ready(function () {
+            $("#resultat").hide();
+        });
+
         $('#ContentPlaceHolder1_type').editable({
             type: 'text',
             title: 'Entrez le type du courrier',
             success: function (response, newValue) {
                 console.log("Type du courrier : " + newValue);
+                requeteModification("type", newValue);
             }
         });
 
@@ -143,6 +311,7 @@
             title: 'Entrez la nature du courrier',
             success: function (response, newValue) {
                 console.log("Nature du courrier : " + newValue);
+                requeteModification("nature", newValue);
             }
         });
 
@@ -151,6 +320,7 @@
             title: 'Entrez le devise de la facture',
             success: function (response, newValue) {
                 console.log("Devise : " + newValue);
+                requeteModification("devise", newValue);
             }
         });
 
@@ -159,6 +329,7 @@
             title: 'Entrez le montant de la facture',
             success: function (response, newValue) {
                 console.log("Montant : " + newValue);
+                requeteModification("montant", newValue);
             }
         });
 
@@ -167,6 +338,7 @@
             title: 'Entrez l objet du courrier',
             success: function (response, newValue) {
                 console.log("Objet : " + newValue);
+                requeteModification("objet", newValue);
             }
         });
 
@@ -179,7 +351,9 @@
                 weekStart: 1
             },
             success: function (response, newValue) {
-                console.log("Date du creation : " + newValue);
+                newValue = (('' + newValue.getDate()).length < 2 ? '0' : '') + newValue.getDate() + "/" + (('' + newValue.getMonth()).length < 2 ? '0' : '') + (newValue.getMonth() + 1) + "/" + newValue.getFullYear();
+                console.log("Date de creation : " + newValue);
+                requeteModification("datecrea", newValue);
             }
         });
 
@@ -192,7 +366,9 @@
                 weekStart: 1
             },
             success: function (response, newValue) {
+                newValue = (('' + newValue.getDate()).length < 2 ? '0' : '') + newValue.getDate() + "/" + (('' + newValue.getMonth()).length < 2 ? '0' : '') + (newValue.getMonth() + 1) + "/" + newValue.getFullYear();
                 console.log("Date du courrier : " + newValue);
+                requeteModification("datecour", newValue);
             }
         });
 
@@ -205,7 +381,9 @@
                 weekStart: 1
             },
             success: function (response, newValue) {
+                newValue = (('' + newValue.getDate()).length < 2 ? '0' : '') + newValue.getDate() + "/" + (('' + newValue.getMonth()).length < 2 ? '0' : '') + (newValue.getMonth() + 1) + "/" + newValue.getFullYear();
                 console.log("Date d arrivée : " + newValue);
+                requeteModification("datearr", newValue);
             }
         });
 
@@ -213,20 +391,21 @@
             type: 'select',
             title: 'Ce courrier exige t-il un accusé ?',
             source : [
-                {value : 'oui',text : 'Oui'},
-                {value : 'non',text : 'Non'}
+                {value : '1',text : 'Oui'},
+                {value : '0',text : 'Non'}
 
             ],
             success: function (response, newValue) {
                 console.log('Accusé ? : ' + newValue);
+                requeteModification("reponse", newValue);
             }
         });
 
         $('#ContentPlaceHolder1_ref_dos').editable({
             type: 'select',
-            title: 'Ce courrier est une réponse au courrier : ',
+            title: 'Référence du dossier : ',
             source: [
-                { value: '', text: '' },
+                { value: 'sans', text: '' },
                 <% 
                 List<GestionCourrier.Metier.Dossier> liste = GestionCourrier.Services.DossierService.getRefDossiers();
                 for (var i = 0; i < liste.Count; i++)
@@ -236,6 +415,7 @@
             ],
             success: function (response, newValue) {
                 console.log('Nouveau dossier : ' + newValue);
+                requeteModification("ref_dos", newValue);
             }
         });
 
@@ -253,6 +433,7 @@
             ],
             success: function (response, newValue) {
                 console.log('Nouveau expediteur : ' + newValue);
+                requeteModification("expediteur", newValue);
             }
         });
 
@@ -270,7 +451,28 @@
             ],
             success: function (response, newValue) {
                 console.log('Courrier réponse : ' + newValue);
+                requeteModification("courrier_reponse", newValue);
             }
+        });
+
+        $("#ContentPlaceHolder1_unit").on("change", function () {
+
+            $.get("uagent.aspx?id=" + this.value, function (data, status) {
+                $("#agent_ajax").html(data);
+            });
+        });
+
+        $("#ContentPlaceHolder1_btn_enregistrer").click(function (e) {
+
+            $("#ContentPlaceHolder1_id_agent_ua").val($("#ContentPlaceHolder1_agent_ua").val());
+
+        });
+
+        $("#ContentPlaceHolder1_btn_enregistrer_copie").click(function (e) {
+
+            $("#ContentPlaceHolder1_id_unit_copie").val($("#ContentPlaceHolder1_unit_copie").val());
+            $("#ContentPlaceHolder1_id_destinataire_copie").val($("#ContentPlaceHolder1_id_destinataire").val());
+
         });
 
     </script>
